@@ -53,7 +53,7 @@ def get_mega645_stats():
         "game": "MEGA 6/45",
         "analyzed_draws": len(draws_only),
         "hot_numbers": [{"number": f"{k:02d}", "frequency": v} for k, v in sorted_freq],
-        "cold_numbers": [{"number": f"{k:02d}", "gap_days": v} for k, v in sorted_gaps]
+        "cold_numbers": [{"number": f"{k:02d}", "gap_days": v} for k, v in sorted_gaps],
         "ai_prediction": ai_prediction  
     })
 
