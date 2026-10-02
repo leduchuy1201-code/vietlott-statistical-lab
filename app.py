@@ -1,8 +1,8 @@
 # vietlott-statistical-lab/app.py
 from flask import Flask, jsonify, render_template
+from core.database import db_manager
 from core.statistics import stat_engine
 from core.ml_engine import ml_engine
-
 # Khởi tạo ứng dụng Web Flask
 app = Flask(__name__)
 # Tạo đường dẫn trang chủ
