@@ -105,6 +105,7 @@
                         li.innerHTML = `<span class="font-bold text-lg bg-blue-400 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
                                         <span class="text-gray-700">Gan: <b>${item.gap_days}</b> kỳ</span>`;
                         coldList.appendChild(li);
+                    });
                     // Vẽ các quả bóng AI dự đoán
                  const aiPicksContainer = document.getElementById('ai-picks');
                  data.ai_prediction.top_6_picks.forEach(num => {
