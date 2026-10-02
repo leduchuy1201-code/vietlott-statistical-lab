@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietlott Statistical Lab</title>
+    <!-- Nhúng thư viện Tailwind CSS để làm đẹp giao diện cực nhanh -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    
+    <div class="max-w-4xl mx-auto py-10 px-4">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-red-600 mb-2">VIETLOTT STATISTICAL LAB</h1>
+            <p class="text-gray-600">Hệ thống phân tích dữ liệu xổ số tự động</p>
+        </header>
+
+        <!-- Loading Text -->
+        <div id="loading" class="text-center text-xl text-blue-600 font-semibold animate-pulse">
+            Đang tải dữ liệu tính toán từ máy chủ...
+        </div>
+
+        <!-- Dashboard Content (Ban đầu sẽ bị ẩn) -->
+        <div id="dashboard" class="hidden">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8 text-center border-t-4 border-blue-500">
+                <h2 class="text-2xl font-bold text-gray-800">GAME: <span id="game-name" class="text-blue-600"></span></h2>
+                <p class="text-gray-500 mt-2">Dựa trên phân tích <span id="draw-count" class="font-bold text-black"></span> kỳ quay gần nhất</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Cột Số Nóng -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-500">
+                    <h3 class="text-xl font-bold text-red-600 mb-4 flex items-center">
+                        <span>🔥 TOP 5 SỐ NÓNG (Ra nhiều nhất)</span>
+                    </h3>
+                    <ul id="hot-numbers" class="space-y-3">
+                        <!-- Javascript sẽ điền dữ liệu vào đây -->
+                    </ul>
+                </div>
+
+                <!-- Cột Số Lạnh -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-300">
+                    <h3 class="text-xl font-bold text-blue-500 mb-4 flex items-center">
+                        <span>❄️ TOP 5 SỐ LẠNH (Gan lâu nhất)</span>
+                    </h3>
+                    <ul id="cold-numbers" class="space-y-3">
+                        <!-- Javascript sẽ điền dữ liệu vào đây -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đoạn mã JavaScript xử lý kết nối với Backend -->
+    <script>
+        // Khi trang web vừa tải xong, tự động chạy hàm này
+        document.addEventListener("DOMContentLoaded", function() {
+            // Gọi API bằng đường link chúng ta đã tạo ở Milestone 8
+            fetch('/api/v1/stats/mega645')
+                .then(response => response.json())
+                .then(data => {
+                    // Tắt chữ Loading, Bật Dashboard
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('dashboard').classList.remove('hidden');
+
+                    // Điền thông tin chung
+                    document.getElementById('game-name').innerText = data.game;
+                    document.getElementById('draw-count').innerText = data.analyzed_draws;
+
+                    // Vẽ danh sách Số Nóng
+                    const hotList = document.getElementById('hot-numbers');
+                    data.hot_numbers.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = "flex justify-between items-center bg-red-50 p-3 rounded";
+                        li.innerHTML = `<span class="font-bold text-lg bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
+                                        <span class="text-gray-700">Xuất hiện: <b>${item.frequency}</b> lần</span>`;
+                        hotList.appendChild(li);
+                    });
+
+                    // Vẽ danh sách Số Lạnh
+                    const coldList = document.getElementById('cold-numbers');
+                    data.cold_numbers.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = "flex justify-between items-center bg-blue-50 p-3 rounded";
+                        li.innerHTML = `<span class="font-bold text-lg bg-blue-400 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
+                                        <span class="text-gray-700">Gan: <b>${item.gap_days}</b> kỳ</span>`;
+                        coldList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    document.getElementById('loading').innerText = "Lỗi kết nối đến máy chủ!";
+                    document.getElementById('loading').classList.replace('text-blue-600', 'text-red-600');
+                    console.error("Lỗi:", error);
+                });
+        });
+    </script>
+</body>
+</html>
