@@ -40,3 +40,21 @@ echo -e "Flask==3.0.0\nfirebase-admin==6.5.0\nrequests==2.31.0\ngunicorn==21.2.0
 echo -e "__pycache__/\n*.pyc\n.idea/\n.vscode/" > .gitignore
 git config --global user.name "Data Engineer"
 git config --global user.email "data@engineer.com"
+git add .
+git commit -m "Phiên bản hoàn thiện: Giao diện và API"
+gh auth login
+gh repo create vietlott-statistical-lab --public --source=. --remote=origin --push
+git branch -M main
+git push -u origin main --force
+git rm -r --cached firebase_credentials.json
+git rm -r --cached .codeoss/
+git rm -r --cached .cache/
+echo "firebase_credentials.json" >> .gitignore
+echo ".codeoss/" >> .gitignore
+echo ".cache/" >> .gitignore
+git add .gitignore
+git commit --amend --no-edit
+git push -u origin main --force
+pip install scikit-learn pandas
+touch core/ml_engine.py test_ml.py
+python3 test_ml.py

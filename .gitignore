@@ -5,3 +5,4 @@ __pycache__/
 firebase_credentials.json
 .codeoss/
 .cache/
+.config/

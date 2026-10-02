@@ -1,7 +1,7 @@
 # vietlott-statistical-lab/app.py
 from flask import Flask, jsonify, render_template
-from core.database import db_manager
 from core.statistics import stat_engine
+from core.ml_engine import ml_engine
 
 # Khởi tạo ứng dụng Web Flask
 app = Flask(__name__)
@@ -47,11 +47,14 @@ def get_mega645_stats():
     sorted_gaps = sorted(gaps.items(), key=lambda x: x[1], reverse=True)[:5]
 
     # 6. Định dạng kết quả trả về cho trình duyệt (JSON)
+    # --- MỚI THÊM: Đưa dữ liệu vào AI để dự đoán ---
+    ai_prediction = ml_engine.predict_next_draw(draws_only, pool_size=45)
     return jsonify({
         "game": "MEGA 6/45",
         "analyzed_draws": len(draws_only),
         "hot_numbers": [{"number": f"{k:02d}", "frequency": v} for k, v in sorted_freq],
         "cold_numbers": [{"number": f"{k:02d}", "gap_days": v} for k, v in sorted_gaps]
+        "ai_prediction": ai_prediction  
     })
 
 # Khởi động Web Server ở cổng 8080

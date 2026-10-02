@@ -29,6 +29,25 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Khu vực Dự đoán AI -->
+         <div class="bg-gradient-to-r from-purple-700 to-indigo-800 rounded-lg shadow-xl p-6 mt-8 border-t-4 border-purple-400 text-white">
+             <h3 class="text-2xl font-bold mb-3 flex items-center justify-center">
+                 <span>🤖 TRÍ TUỆ NHÂN TẠO DỰ ĐOÁN</span>
+             </h3>
+             <p class="mb-6 text-purple-200 text-sm text-center">Thuật toán Random Forest học từ tần suất và độ gan lịch sử.</p>
+
+             <div id="ai-picks" class="flex flex-wrap gap-4 justify-center mb-6">
+                 <!-- Javascript sẽ điền các quả bóng màu vàng vào đây -->
+             </div>
+
+             <div class="bg-white/10 rounded-lg p-4 max-w-md mx-auto">
+                 <h4 class="font-semibold mb-3 text-yellow-300 border-b border-white/20 pb-2">Bảng phân tích xác suất (Top 5):</h4>
+                 <ul id="ai-details" class="space-y-2 text-sm">
+                     <!-- Javascript sẽ điền chi tiết vào đây -->
+                 </ul>
+             </div>
+         </div>
+
                 <!-- Cột Số Nóng -->
                 <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-500">
                     <h3 class="text-xl font-bold text-red-600 mb-4 flex items-center">
@@ -86,6 +105,24 @@
                         li.innerHTML = `<span class="font-bold text-lg bg-blue-400 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
                                         <span class="text-gray-700">Gan: <b>${item.gap_days}</b> kỳ</span>`;
                         coldList.appendChild(li);
+                    // Vẽ các quả bóng AI dự đoán
+                 const aiPicksContainer = document.getElementById('ai-picks');
+                 data.ai_prediction.top_6_picks.forEach(num => {
+                     const span = document.createElement('span');
+                     span.className = "font-bold text-xl bg-yellow-400 text-indigo-900 w-12 h-12 flex items-center justify-center rounded-full shadow-[0_0_15px_rgba(250,204,21,0.5)]";
+                     span.innerText = num.toString().padStart(2, '0');
+                     aiPicksContainer.appendChild(span);
+                 });
+
+                 // Vẽ bảng chi tiết xác suất
+                 const aiDetailsList = document.getElementById('ai-details');
+                 // Chỉ lấy 5 số đầu tiên trong bảng details
+                 data.ai_prediction.details.slice(0, 5).forEach(item => {
+                     const li = document.createElement('li');
+                     li.className = "flex justify-between items-center";
+                     li.innerHTML = `<span>Số <b>${item[0].toString().padStart(2, '0')}</b></span> <span class="bg-purple-900 px-2 py-1 rounded text-xs">${(item[1] * 100).toFixed(2)}%</span>`;
+                     aiDetailsList.appendChild(li);
+                 });
                     });
                 })
                 .catch(error => {
