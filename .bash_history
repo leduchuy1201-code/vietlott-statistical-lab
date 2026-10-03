@@ -103,3 +103,6 @@ git push -u origin main
 git add templates/index.html
 git commit -m "Bọc áo giáp bắt lỗi JSON"
 git push -u origin main
+git add .
+git commit -m "Đẩy toàn bộ Lõi AI và Collector của Max 3D lên máy chủ"
+git push -u origin main

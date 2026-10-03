@@ -8,24 +8,27 @@
 </head>
 <body class="bg-gray-100 min-h-screen font-sans">
     
-    <div class="max-w-4xl mx-auto py-10 px-4">
+    <div class="max-w-5xl mx-auto py-10 px-4">
         <!-- Header -->
         <header class="text-center mb-8">
             <h1 class="text-4xl font-bold text-red-600 mb-2">VIETLOTT STATISTICAL LAB</h1>
-            <p class="text-gray-600">Hệ thống phân tích dữ liệu và AI dự đoán</p>
+            <p class="text-gray-600">Hệ thống AI Đa nền tảng (Mega 6/45, Max 3D, Max 3D+)</p>
         </header>
 
-        <!-- Menu Chọn Game -->
-        <div class="flex justify-center space-x-4 mb-8">
-            <button onclick="loadGame('mega645')" id="btn-mega645" class="px-6 py-2 rounded-full font-bold text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">
+        <!-- Menu Chọn Game 3 Nút -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <button onclick="loadGame('mega645')" id="btn-mega645" class="px-6 py-2 rounded-full font-bold text-white bg-blue-600 shadow-md transition hover:scale-105">
                 MEGA 6/45
             </button>
-            <button onclick="loadGame('max3d')" id="btn-max3d" class="px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 hover:bg-gray-400 transition shadow-md">
+            <button onclick="loadGame('max3d')" id="btn-max3d" class="px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 shadow-md transition hover:scale-105">
                 MAX 3D
+            </button>
+            <button onclick="loadGame('max3dplus')" id="btn-max3dplus" class="px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 shadow-md transition hover:scale-105">
+                MAX 3D+
             </button>
         </div>
 
-        <!-- Loading Text -->
+        <!-- Loading & Error Text -->
         <div id="loading" class="text-center text-xl text-blue-600 font-semibold animate-pulse hidden">
             Đang tải dữ liệu tính toán từ Trí tuệ Nhân tạo...
         </div>
@@ -40,21 +43,19 @@
         <div id="mega-section" class="hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-red-500">
-                    <h3 class="text-xl font-bold text-red-600 mb-4 flex items-center">🔥 TOP 5 SỐ NÓNG</h3>
+                    <h3 class="text-xl font-bold text-red-600 mb-4">🔥 TOP 5 SỐ NÓNG</h3>
                     <ul id="hot-numbers" class="space-y-3"></ul>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-300">
-                    <h3 class="text-xl font-bold text-blue-500 mb-4 flex items-center">❄️ TOP 5 SỐ LẠNH</h3>
+                    <h3 class="text-xl font-bold text-blue-500 mb-4">❄️ TOP 5 SỐ LẠNH</h3>
                     <ul id="cold-numbers" class="space-y-3"></ul>
                 </div>
             </div>
-
             <div class="bg-gradient-to-r from-purple-700 to-indigo-800 rounded-lg shadow-xl p-6 mt-8 border-t-4 border-purple-400 text-white">
-                <h3 class="text-2xl font-bold mb-3 flex items-center justify-center">🤖 AI DỰ ĐOÁN (MEGA)</h3>
-                <p class="mb-6 text-purple-200 text-sm text-center">Gợi ý 6 bộ số có xác suất xuất hiện cao nhất.</p>
+                <h3 class="text-2xl font-bold mb-3 text-center">🤖 AI DỰ ĐOÁN (MEGA)</h3>
                 <div id="mega-ai-picks" class="flex flex-wrap gap-4 justify-center mb-6"></div>
                 <div class="bg-white/10 rounded-lg p-4 max-w-md mx-auto">
-                    <h4 class="font-semibold mb-3 text-yellow-300 border-b border-white/20 pb-2">Bảng xác suất (Top 5):</h4>
+                    <h4 class="font-semibold mb-3 text-yellow-300 border-b border-white/20 pb-2">Top 5 tỷ lệ cao nhất:</h4>
                     <ul id="mega-ai-details" class="space-y-2 text-sm"></ul>
                 </div>
             </div>
@@ -64,28 +65,47 @@
         <div id="max3d-section" class="hidden">
             <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg shadow-2xl p-8 border-t-4 border-yellow-500 text-white text-center">
                 <h3 class="text-2xl font-bold mb-2 text-yellow-400">🤖 AI SIÊU CẤP (MAX 3D)</h3>
-                <p class="mb-6 text-gray-400 text-sm">Kết quả từ 3 mô hình Random Forest chạy song song.</p>
-                
                 <div class="py-6 bg-black/30 rounded-xl mb-8">
-                    <p class="text-gray-300 mb-2 uppercase tracking-widest text-sm font-semibold">Chuỗi số lý tưởng nhất</p>
-                    <div id="max3d-best" class="text-7xl font-black text-yellow-400 tracking-[0.2em] drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]">
-                        <!-- Số sẽ hiện ở đây -->
-                    </div>
+                    <div id="max3d-best" class="text-7xl font-black text-yellow-400 tracking-[0.2em] drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                    <div class="bg-white/5 p-4 rounded-lg"><h5 class="text-red-400 font-bold mb-2">Trăm</h5><ul id="max3d-tram" class="space-y-2 text-sm"></ul></div>
+                    <div class="bg-white/5 p-4 rounded-lg"><h5 class="text-green-400 font-bold mb-2">Chục</h5><ul id="max3d-chuc" class="space-y-2 text-sm"></ul></div>
+                    <div class="bg-white/5 p-4 rounded-lg"><h5 class="text-blue-400 font-bold mb-2">Đơn Vị</h5><ul id="max3d-donvi" class="space-y-2 text-sm"></ul></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= KHU VỰC MAX 3D+ ================= -->
+        <div id="max3dplus-section" class="hidden">
+            <div class="bg-gradient-to-r from-teal-900 to-blue-900 rounded-lg shadow-2xl p-8 border-t-4 border-teal-400 text-white text-center">
+                <h3 class="text-2xl font-bold mb-2 text-teal-300">🚀 AI CHUYÊN GIA (MAX 3D+)</h3>
+                <p class="mb-6 text-blue-200 text-sm">Chạy đồng thời 6 Mô hình AI cho 2 bộ số.</p>
+                
+                <div class="py-6 bg-black/40 rounded-xl mb-8 flex justify-center items-center gap-6">
+                    <div id="max3dplus-best-1" class="text-6xl font-black text-teal-300 tracking-[0.2em] drop-shadow-[0_0_15px_rgba(45,212,191,0.6)]"></div>
+                    <div class="text-4xl text-gray-500 font-black">-</div>
+                    <div id="max3dplus-best-2" class="text-6xl font-black text-teal-300 tracking-[0.2em] drop-shadow-[0_0_15px_rgba(45,212,191,0.6)]"></div>
                 </div>
 
-                <h4 class="font-semibold mb-4 text-white border-b border-gray-600 pb-2 text-left">Phân tích chi tiết từng vị trí:</h4>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                    <div class="bg-white/5 p-4 rounded-lg">
-                        <h5 class="text-red-400 font-bold mb-2">Hàng Trăm</h5>
-                        <ul id="max3d-tram" class="space-y-2 text-sm text-gray-300"></ul>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <!-- Dãy 1 -->
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <h4 class="text-center font-bold text-white mb-4 border-b border-white/20 pb-2">Xác suất Dãy 1</h4>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div><span class="text-xs text-gray-400">Trăm</span><ul id="plus-1-tram" class="space-y-1 mt-1 text-sm"></ul></div>
+                            <div><span class="text-xs text-gray-400">Chục</span><ul id="plus-1-chuc" class="space-y-1 mt-1 text-sm"></ul></div>
+                            <div><span class="text-xs text-gray-400">Đơn vị</span><ul id="plus-1-donvi" class="space-y-1 mt-1 text-sm"></ul></div>
+                        </div>
                     </div>
-                    <div class="bg-white/5 p-4 rounded-lg">
-                        <h5 class="text-green-400 font-bold mb-2">Hàng Chục</h5>
-                        <ul id="max3d-chuc" class="space-y-2 text-sm text-gray-300"></ul>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-lg">
-                        <h5 class="text-blue-400 font-bold mb-2">Hàng Đơn Vị</h5>
-                        <ul id="max3d-donvi" class="space-y-2 text-sm text-gray-300"></ul>
+                    <!-- Dãy 2 -->
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                        <h4 class="text-center font-bold text-white mb-4 border-b border-white/20 pb-2">Xác suất Dãy 2</h4>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div><span class="text-xs text-gray-400">Trăm</span><ul id="plus-2-tram" class="space-y-1 mt-1 text-sm"></ul></div>
+                            <div><span class="text-xs text-gray-400">Chục</span><ul id="plus-2-chuc" class="space-y-1 mt-1 text-sm"></ul></div>
+                            <div><span class="text-xs text-gray-400">Đơn vị</span><ul id="plus-2-donvi" class="space-y-1 mt-1 text-sm"></ul></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,123 +114,99 @@
     </div>
 
     <script>
-        // Hàm cập nhật màu sắc nút bấm
         function updateButtons(activeGame) {
-            const btnMega = document.getElementById('btn-mega645');
-            const btnMax = document.getElementById('btn-max3d');
-            
-            if (activeGame === 'mega645') {
-                btnMega.className = "px-6 py-2 rounded-full font-bold text-white bg-blue-600 shadow-md transition";
-                btnMax.className = "px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 hover:bg-gray-400 shadow-md transition";
-            } else {
-                btnMax.className = "px-6 py-2 rounded-full font-bold text-white bg-blue-600 shadow-md transition";
-                btnMega.className = "px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 hover:bg-gray-400 shadow-md transition";
-            }
+            const btns = ['mega645', 'max3d', 'max3dplus'];
+            btns.forEach(btn => {
+                const el = document.getElementById(`btn-${btn}`);
+                if (btn === activeGame) {
+                    el.className = "px-6 py-2 rounded-full font-bold text-white bg-blue-600 shadow-md transition hover:scale-105";
+                } else {
+                    el.className = "px-6 py-2 rounded-full font-bold text-gray-700 bg-gray-300 shadow-md transition hover:scale-105";
+                }
+            });
         }
 
-        // Hàm chính để tải dữ liệu
         async function loadGame(gameType) {
-            // Hiển thị loading, ẩn các khu vực
             const loadingEl = document.getElementById('loading');
             loadingEl.innerHTML = "Đang tải dữ liệu tính toán từ Trí tuệ Nhân tạo...";
             loadingEl.className = "text-center text-xl text-blue-600 font-semibold animate-pulse";
             
             document.getElementById('mega-section').classList.add('hidden');
             document.getElementById('max3d-section').classList.add('hidden');
+            document.getElementById('max3dplus-section').classList.add('hidden');
             document.getElementById('game-info').classList.add('hidden');
             updateButtons(gameType);
 
-            // Gọi API tương ứng
-            const apiUrl = gameType === 'mega645' ? '/api/v1/stats/mega645' : '/api/v1/stats/max3d';
+            let apiUrl = '';
+            if (gameType === 'mega645') apiUrl = '/api/v1/stats/mega645';
+            else if (gameType === 'max3d') apiUrl = '/api/v1/stats/max3d';
+            else apiUrl = '/api/v1/stats/max3dplus';
 
             try {
                 const response = await fetch(apiUrl);
-                
-                // MẶC ÁO GIÁP: Kiểm tra xem máy chủ có trả về HTML (lỗi) thay vì JSON không
                 const contentType = response.headers.get("content-type");
+                
                 if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error(`Máy chủ chưa cập nhật phiên bản mới hoặc bị sập (Mã lỗi: ${response.status}). Vui lòng xử lý lỗi Render!`);
+                    throw new Error(`Lỗi máy chủ (Không phải JSON). Mã: ${response.status}. Thường do Render đang Deploy, hãy chờ 2 phút!`);
                 }
 
                 const data = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(data.error || `Mã lỗi HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error(data.error || `Mã lỗi HTTP ${response.status}`);
 
-                // Xử lý dữ liệu thành công
-                document.getElementById('loading').classList.add('hidden');
+                loadingEl.classList.add('hidden');
                 document.getElementById('game-info').classList.remove('hidden');
                 document.getElementById('game-name').innerText = data.game;
                 document.getElementById('draw-count').innerText = data.analyzed_draws;
 
-                if (gameType === 'mega645') {
-                    renderMega(data);
-                } else {
-                    renderMax3D(data);
-                }
+                if (gameType === 'mega645') renderMega(data);
+                else if (gameType === 'max3d') renderMax3D(data);
+                else renderMax3DPlus(data);
+
             } catch (error) {
-                // Hiển thị lỗi chi tiết ra thẳng màn hình
-                loadingEl.innerHTML = `⚠️️ LỖI KẾT NỐI: <br><span class="text-sm font-normal text-gray-600 mt-2 inline-block">${error.message}</span>`;
+                loadingEl.innerHTML = `⚠ LỖI: <br><span class="text-sm text-gray-600 mt-2 inline-block">${error.message}</span>`;
                 loadingEl.classList.replace('text-blue-600', 'text-red-600');
                 loadingEl.classList.remove('animate-pulse');
-                console.error("API Error:", error);
             }
         }
 
-        // Render dữ liệu Mega 6/45
+        const formatProb = (arr) => arr.map(item => 
+            `<li class="flex justify-between items-center text-gray-300">
+                <span>Số <b class="text-white">${item.digit}</b></span>
+                <span class="text-xs bg-white/20 px-1 py-1 rounded">${(item.prob * 100).toFixed(0)}%</span>
+            </li>`
+        ).join('');
+
         function renderMega(data) {
             document.getElementById('mega-section').classList.remove('hidden');
-            
-            document.getElementById('hot-numbers').innerHTML = data.hot_numbers.map(item => 
-                `<li class="flex justify-between items-center bg-red-50 p-3 rounded">
-                    <span class="font-bold text-lg bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
-                    <span class="text-gray-700">Xuất hiện: <b>${item.frequency}</b> lần</span>
-                </li>`
-            ).join('');
-
-            document.getElementById('cold-numbers').innerHTML = data.cold_numbers.map(item => 
-                `<li class="flex justify-between items-center bg-blue-50 p-3 rounded">
-                    <span class="font-bold text-lg bg-blue-400 text-white w-10 h-10 flex items-center justify-center rounded-full">${item.number}</span> 
-                    <span class="text-gray-700">Gan: <b>${item.gap_days}</b> kỳ</span>
-                </li>`
-            ).join('');
-
-            document.getElementById('mega-ai-picks').innerHTML = data.ai_prediction.top_6_picks.map(num => 
-                `<span class="font-bold text-xl bg-yellow-400 text-indigo-900 w-12 h-12 flex items-center justify-center rounded-full shadow-[0_0_15px_rgba(250,204,21,0.5)]">
-                    ${num.toString().padStart(2, '0')}
-                </span>`
-            ).join('');
-
-            document.getElementById('mega-ai-details').innerHTML = data.ai_prediction.details.slice(0, 5).map(item => 
-                `<li class="flex justify-between items-center">
-                    <span>Số <b>${item[0].toString().padStart(2, '0')}</b></span> 
-                    <span class="bg-purple-900 px-2 py-1 rounded text-xs">${(item[1] * 100).toFixed(2)}%</span>
-                </li>`
-            ).join('');
+            document.getElementById('hot-numbers').innerHTML = data.hot_numbers.map(item => `<li class="flex justify-between bg-red-50 p-3 rounded"><span class="font-bold bg-red-500 text-white w-8 h-8 flex items-center justify-center rounded-full">${item.number}</span> <span class="text-gray-700"><b>${item.frequency}</b> lần</span></li>`).join('');
+            document.getElementById('cold-numbers').innerHTML = data.cold_numbers.map(item => `<li class="flex justify-between bg-blue-50 p-3 rounded"><span class="font-bold bg-blue-400 text-white w-8 h-8 flex items-center justify-center rounded-full">${item.number}</span> <span class="text-gray-700">Gan <b>${item.gap_days}</b> kỳ</span></li>`).join('');
+            document.getElementById('mega-ai-picks').innerHTML = data.ai_prediction.top_6_picks.map(num => `<span class="font-bold text-xl bg-yellow-400 text-indigo-900 w-12 h-12 flex items-center justify-center rounded-full">${num.toString().padStart(2, '0')}</span>`).join('');
+            document.getElementById('mega-ai-details').innerHTML = data.ai_prediction.details.slice(0, 5).map(item => `<li class="flex justify-between"><span>Số <b>${item[0].toString().padStart(2, '0')}</b></span> <span>${(item[1] * 100).toFixed(2)}%</span></li>`).join('');
         }
 
         function renderMax3D(data) {
             document.getElementById('max3d-section').classList.remove('hidden');
-            
             document.getElementById('max3d-best').innerText = data.ai_prediction.best_number;
-
-            const formatProb = (arr) => arr.map(item => 
-                `<li class="flex justify-between items-center">
-                    <span>Số <b class="text-white text-lg">${item.digit}</b></span>
-                    <span class="text-xs bg-white/20 px-2 py-1 rounded">${(item.prob * 100).toFixed(1)}%</span>
-                </li>`
-            ).join('');
-
             document.getElementById('max3d-tram').innerHTML = formatProb(data.ai_prediction.details.tram);
             document.getElementById('max3d-chuc').innerHTML = formatProb(data.ai_prediction.details.chuc);
             document.getElementById('max3d-donvi').innerHTML = formatProb(data.ai_prediction.details.don_vi);
         }
 
-        // Tự động tải Mega 6/45 khi vừa mở web
-        document.addEventListener("DOMContentLoaded", () => {
-            loadGame('mega645');
-        });
+        function renderMax3DPlus(data) {
+            document.getElementById('max3dplus-section').classList.remove('hidden');
+            document.getElementById('max3dplus-best-1').innerText = data.ai_prediction.best_number_1;
+            document.getElementById('max3dplus-best-2').innerText = data.ai_prediction.best_number_2;
+            
+            document.getElementById('plus-1-tram').innerHTML = formatProb(data.ai_prediction.details_1.tram);
+            document.getElementById('plus-1-chuc').innerHTML = formatProb(data.ai_prediction.details_1.chuc);
+            document.getElementById('plus-1-donvi').innerHTML = formatProb(data.ai_prediction.details_1.don_vi);
+            
+            document.getElementById('plus-2-tram').innerHTML = formatProb(data.ai_prediction.details_2.tram);
+            document.getElementById('plus-2-chuc').innerHTML = formatProb(data.ai_prediction.details_2.chuc);
+            document.getElementById('plus-2-donvi').innerHTML = formatProb(data.ai_prediction.details_2.don_vi);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => loadGame('mega645'));
     </script>
 </body>
 </html>
