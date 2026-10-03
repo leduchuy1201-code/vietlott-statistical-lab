@@ -111,7 +111,10 @@
         // Hàm chính để tải dữ liệu
         function loadGame(gameType) {
             // Hiển thị loading, ẩn các khu vực
-            document.getElementById('loading').classList.remove('hidden');
+            const loadingEl = document.getElementById('loading');
+            loadingEl.innerHTML = "Đang tải dữ liệu tính toán từ Trí tuệ Nhân tạo...";
+            loadingEl.className = "text-center text-xl text-blue-600 font-semibold animate-pulse";
+            
             document.getElementById('mega-section').classList.add('hidden');
             document.getElementById('max3d-section').classList.add('hidden');
             document.getElementById('game-info').classList.add('hidden');
@@ -121,7 +124,14 @@
             const apiUrl = gameType === 'mega645' ? '/api/v1/stats/mega645' : '/api/v1/stats/max3d';
 
             fetch(apiUrl)
-                .then(response => response.json())
+                .then(async response => {
+                    const data = await response.json();
+                    if (!response.ok) {
+                        // Bắt lỗi chi tiết từ máy chủ gửi về
+                        throw new Error(data.error || `Mã lỗi HTTP ${response.status}`);
+                    }
+                    return data;
+                })
                 .then(data => {
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('game-info').classList.remove('hidden');
@@ -136,8 +146,10 @@
                     }
                 })
                 .catch(error => {
-                    document.getElementById('loading').innerText = "Lỗi tải dữ liệu. Vui lòng thử lại!";
-                    document.getElementById('loading').classList.replace('text-blue-600', 'text-red-600');
+                    // Hiển thị lỗi chi tiết ra thẳng màn hình
+                    loadingEl.innerHTML = `LỖI HỆ THỐNG: <br><span class="text-sm font-normal text-gray-600">${error.message}</span>`;
+                    loadingEl.classList.replace('text-blue-600', 'text-red-600');
+                    loadingEl.classList.remove('animate-pulse');
                     console.error("API Error:", error);
                 });
         }
@@ -174,7 +186,6 @@
             ).join('');
         }
 
-        // Render dữ liệu Max 3D
         function renderMax3D(data) {
             document.getElementById('max3d-section').classList.remove('hidden');
             
