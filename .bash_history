@@ -58,3 +58,48 @@ git push -u origin main --force
 pip install scikit-learn pandas
 touch core/ml_engine.py test_ml.py
 python3 test_ml.py
+git add .
+git commit -m "Tích hợp AI Random Forest vào giao diện"
+git push -u origin main
+git push -u origin main --force
+git rm -r --cached .config/
+echo ".config/" >> .gitignore
+git add .gitignore
+git commit --amend --no-edit
+git push -u origin main --force
+git add requirements.txt
+git commit -m "Bổ sung thư viện AI cho máy chủ"
+git push -u origin main
+git add app.py
+git commit -m "Sửa lỗi thiếu dấu phẩy ở app.py"
+git push -u origin main
+git add app.py
+git commit -m "Sửa lỗi thiếu dấu phẩy ở app.py lần 2"
+git push -u origin main
+git add app.py
+git commit -m "Sửa lỗi thiếu import db_manager"
+git push -u origin main
+git add templates/index.html
+git commit -m "Sửa lỗi lặp bảng AI 5 lần"
+git push -u origin main
+git add templates/index.html
+git commit -m "Cập nhật file HTML hoàn chỉnh"
+git push -u origin main
+touch test_max3d.py
+python3 test_max3d.py
+test_max3d.py
+python3 test_max3d.py
+touch test_ml_max3d.py
+python3 test_ml_max3d.py
+git add app.py
+git commit -m "Thêm API hoàn chỉnh cho Max 3D"
+git push -u origin main
+git add templates/index.html
+git commit -m "Cập nhật giao diện Đa trò chơi Mega & Max 3D"
+git push -u origin main
+git add templates/index.html
+git commit -m "Cập nhật HTML với bộ quét lỗi chi tiết"
+git push -u origin main
+git add templates/index.html
+git commit -m "Bọc áo giáp bắt lỗi JSON"
+git push -u origin main

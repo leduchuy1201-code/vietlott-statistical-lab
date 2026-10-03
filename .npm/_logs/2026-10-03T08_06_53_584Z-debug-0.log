@@ -6,9 +6,9 @@
 5 silly config load:file:/usr/local/nvm/versions/node/v24.21.0/etc/npmrc
 6 verbose title npm exec git+https://github.com/gemini-cli-extensions/data-agent-kit-starter-pack.git --mode=visualization
 7 verbose argv "exec" "--yes" "--" "git+https://github.com/gemini-cli-extensions/data-agent-kit-starter-pack.git" "--mode=visualization"
-8 verbose logfile logs-max:10 dir:/home/leduchuy1201/.npm/_logs/2026-10-02T14_21_44_716Z-
-9 verbose logfile /home/leduchuy1201/.npm/_logs/2026-10-02T14_21_44_716Z-debug-0.log
-10 silly logfile start cleaning logs, removing 1 files
+8 verbose logfile logs-max:10 dir:/home/leduchuy1201/.npm/_logs/2026-10-03T08_06_53_584Z-
+9 verbose logfile /home/leduchuy1201/.npm/_logs/2026-10-03T08_06_53_584Z-debug-0.log
+10 silly logfile start cleaning logs, removing 2 files
 11 silly logfile done cleaning log files
 12 silly packumentCache heap:2348810240 maxSize:587202560 maxEntrySize:293601280
 13 verbose stack Error: Fetching packages of type "git" have been disabled
@@ -31,4 +31,4 @@
 20 verbose npm  v12.0.2
 21 verbose exit 1
 22 verbose code 1
-23 error A complete log of this run can be found in: /home/leduchuy1201/.npm/_logs/2026-10-02T14_21_44_716Z-debug-0.log
+23 error A complete log of this run can be found in: /home/leduchuy1201/.npm/_logs/2026-10-03T08_06_53_584Z-debug-0.log
