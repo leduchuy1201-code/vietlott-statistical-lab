@@ -109,7 +109,7 @@
         }
 
         // Hàm chính để tải dữ liệu
-        function loadGame(gameType) {
+        async function loadGame(gameType) {
             // Hiển thị loading, ẩn các khu vực
             const loadingEl = document.getElementById('loading');
             loadingEl.innerHTML = "Đang tải dữ liệu tính toán từ Trí tuệ Nhân tạo...";
@@ -123,35 +123,39 @@
             // Gọi API tương ứng
             const apiUrl = gameType === 'mega645' ? '/api/v1/stats/mega645' : '/api/v1/stats/max3d';
 
-            fetch(apiUrl)
-                .then(async response => {
-                    const data = await response.json();
-                    if (!response.ok) {
-                        // Bắt lỗi chi tiết từ máy chủ gửi về
-                        throw new Error(data.error || `Mã lỗi HTTP ${response.status}`);
-                    }
-                    return data;
-                })
-                .then(data => {
-                    document.getElementById('loading').classList.add('hidden');
-                    document.getElementById('game-info').classList.remove('hidden');
-                    
-                    document.getElementById('game-name').innerText = data.game;
-                    document.getElementById('draw-count').innerText = data.analyzed_draws;
+            try {
+                const response = await fetch(apiUrl);
+                
+                // MẶC ÁO GIÁP: Kiểm tra xem máy chủ có trả về HTML (lỗi) thay vì JSON không
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error(`Máy chủ chưa cập nhật phiên bản mới hoặc bị sập (Mã lỗi: ${response.status}). Vui lòng xử lý lỗi Render!`);
+                }
 
-                    if (gameType === 'mega645') {
-                        renderMega(data);
-                    } else {
-                        renderMax3D(data);
-                    }
-                })
-                .catch(error => {
-                    // Hiển thị lỗi chi tiết ra thẳng màn hình
-                    loadingEl.innerHTML = `LỖI HỆ THỐNG: <br><span class="text-sm font-normal text-gray-600">${error.message}</span>`;
-                    loadingEl.classList.replace('text-blue-600', 'text-red-600');
-                    loadingEl.classList.remove('animate-pulse');
-                    console.error("API Error:", error);
-                });
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || `Mã lỗi HTTP ${response.status}`);
+                }
+
+                // Xử lý dữ liệu thành công
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('game-info').classList.remove('hidden');
+                document.getElementById('game-name').innerText = data.game;
+                document.getElementById('draw-count').innerText = data.analyzed_draws;
+
+                if (gameType === 'mega645') {
+                    renderMega(data);
+                } else {
+                    renderMax3D(data);
+                }
+            } catch (error) {
+                // Hiển thị lỗi chi tiết ra thẳng màn hình
+                loadingEl.innerHTML = `⚠️️ LỖI KẾT NỐI: <br><span class="text-sm font-normal text-gray-600 mt-2 inline-block">${error.message}</span>`;
+                loadingEl.classList.replace('text-blue-600', 'text-red-600');
+                loadingEl.classList.remove('animate-pulse');
+                console.error("API Error:", error);
+            }
         }
 
         // Render dữ liệu Mega 6/45
